@@ -15,8 +15,12 @@ limitations under the License.
 */
 package main
 
-import "github.com/CurtisMIT/shogi/cmd"
+import (
+	"fmt"
+	"github.com/CurtisMIT/shogi/cmd"
+)
 
 func main() {
+	fmt.Println("\u96f6 \u4e00 \u4e8c \uff10")
 	cmd.Execute()
 }

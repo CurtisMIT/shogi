@@ -1,11 +1,17 @@
 package game
 
-type spot struct {
+// Spot refers to a spot on the board
+type Spot struct {
 	x int
 	y int
+	p canMover
 }
 
-func Spot(x int, y int) *spot {
-	s := spot{x, y}
-	return &s
+type canMover interface {
+	canMove(Board, Spot, Spot) bool
+}
+
+func newSpot(x int, y int, p canMover) *Spot {
+	s := &Spot{x, y, p}
+	return s
 }
