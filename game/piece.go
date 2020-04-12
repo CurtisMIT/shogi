@@ -1,86 +1,174 @@
 package game
 
+const (
+	pawn     string = "\u6b69"
+	lance    string = "\u9999"
+	knight   string = "\u6842"
+	sGeneral string = "\u9280"
+	gGeneral string = "\u91d1"
+	bishop   string = "\u89d2"
+	rook     string = "\u98db"
+	king     string = "\u7389"
+	pPawn    string = "\u3068"
+	pLance   string = "\u674f"
+	pKnight  string = "\u572d"
+	pSilver  string = "\u5168"
+	pBishop  string = "\u99ac"
+	pRook    string = "\u9f8d"
+)
+
 // Piece is base struct for a piece in shogi
 type Piece struct {
 	black bool
+	name  string
 }
 
-func newPiece(isBlack bool) *Piece {
+func newPiece(isBlack bool, name string) *Piece {
 	p := Piece{
 		black: isBlack,
+		name:  name,
 	}
 
 	return &p
 }
 
-// King is a king piece
-type King struct {
-	black bool
+// Name returns name of the piece
+func (p *Piece) getName() string {
+	return p.name
 }
 
-func (k *King) canMove(board Board, start Spot, end Spot) bool {
+// King is a king piece
+type King struct {
+	*Piece
+}
+
+func newKing(isBlack bool) *King {
+	k := King{
+		newPiece(isBlack, king),
+	}
+
+	return &k
+}
+
+func (k *King) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // Rook is a rook piece
 type Rook struct {
-	black bool
+	*Piece
 }
 
-func (r *Rook) canMove(board Board, start Spot, end Spot) bool {
+func newRook(isBlack bool) *Rook {
+	r := Rook{
+		newPiece(isBlack, rook),
+	}
+
+	return &r
+}
+
+func (r *Rook) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // Bishop is a bishop piece
 type Bishop struct {
-	black bool
+	*Piece
 }
 
-func (b *Bishop) canMove(board Board, start Spot, end Spot) bool {
+func newBishop(isBlack bool) *Bishop {
+	b := Bishop{
+		newPiece(isBlack, bishop),
+	}
+
+	return &b
+}
+
+func (b *Bishop) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // GoldGeneral is a gold general piece
 type GoldGeneral struct {
-	black bool
+	*Piece
 }
 
-func (gg *GoldGeneral) canMove(board Board, start Spot, end Spot) bool {
+func newGoldGeneral(isBlack bool) *GoldGeneral {
+	gg := GoldGeneral{
+		newPiece(isBlack, gGeneral),
+	}
+
+	return &gg
+}
+
+func (gg *GoldGeneral) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // SilverGeneral is a silver general piece
 type SilverGeneral struct {
-	black bool
+	*Piece
 }
 
-func (sg *SilverGeneral) canMove(board Board, start Spot, end Spot) bool {
+func newSilverGeneral(isBlack bool) *SilverGeneral {
+	ss := SilverGeneral{
+		newPiece(isBlack, sGeneral),
+	}
+
+	return &ss
+}
+
+func (sg *SilverGeneral) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // Knight is a knight piece
 type Knight struct {
-	black bool
+	*Piece
 }
 
-func (n *Knight) canMove(board Board, start Spot, end Spot) bool {
+func newKnight(isBlack bool) *Knight {
+	n := Knight{
+		newPiece(isBlack, knight),
+	}
+
+	return &n
+}
+
+func (n *Knight) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // Lance is lance piece
 type Lance struct {
-	black bool
+	*Piece
 }
 
-func (l *Lance) canMove(board Board, start Spot, end Spot) bool {
+func newLance(isBlack bool) *Lance {
+	l := Lance{
+		newPiece(isBlack, lance),
+	}
+
+	return &l
+}
+
+func (l *Lance) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
 
 // Pawn is a pawn piece
 type Pawn struct {
-	black bool
+	*Piece
 }
 
-func (p *Pawn) canMove(board Board, start Spot, end Spot) bool {
+func newPawn(isBlack bool) *Pawn {
+	p := Pawn{
+		newPiece(isBlack, pawn),
+	}
+
+	return &p
+}
+
+func (p *Pawn) canMove(board *Board, start Spot, end Spot) bool {
 	return true
 }
