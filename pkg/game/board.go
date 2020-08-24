@@ -2,9 +2,40 @@ package game
 
 import "fmt"
 
+/*
+   8    7    6    5    4    3    2    1    0
++--------------------------------------------+
+| wL | wN | wS | wG | wK | wG | wS | wN | wL |  a
++--------------------------------------------+
+|    | wR |    |    |    |    |    | wB |    |  b
++--------------------------------------------+
+| wP | wP | wP | wP | wP | wP | wP | wP | wP |  c
++--------------------------------------------+
+|    |    |    |    |    |    |    |    |    |  d
++--------------------------------------------+
+|    |    |    |    |    |    |    |    |    |  e
++--------------------------------------------+
+|    |    |    |    |    |    |    |    |    |  f
++--------------------------------------------+
+| bP | bP | bP | bP | bP | bP | bP | bP | bP |  g
++--------------------------------------------+
+|    | bB |    |    |    |    |    | bR |    |  h
++--------------------------------------------+
+| bL | bN | bS | bG | bK | bG | bS | bN | bL |  i
++--------------------------------------------+
+*/
+
 // Board is the board of shogi
 type Board struct {
 	grid [9][9]*Spot
+}
+
+func (b *Board) getSpot(x int, y int) *Spot {
+	return b.grid[x][y]
+}
+
+func (b *Board) setSpot(x int, y int, s *Spot) {
+	b.grid[x][y] = s
 }
 
 func newBoard() *Board {
@@ -123,15 +154,27 @@ func (b *Board) resetBoard() {
 
 // PrintBoard prints the current game board
 func (b *Board) PrintBoard() {
+	rowNames := [9]string{"a", "b", "c", "d", "e", "f", "g", "h", "i"}
+	for i := 8; i >= 0; i-- {
+		fmt.Print("| ")
+		fmt.Print(i)
+		fmt.Print("|")
+	}
+	fmt.Println()
 	for y := 0; y < 9; y++ {
 		for x := 0; x < 9; x++ {
 			p := b.grid[x][y].p
 			if p != nil {
-				fmt.Printf("|%s|", p.getName())
+				fmt.Printf("|%s|", p.getKanji())
 			} else {
 				fmt.Print("|  |")
 			}
 		}
+		fmt.Print(rowNames[y])
 		fmt.Println()
 	}
+}
+
+func (b *Board) execMove(m *Move) {
+
 }

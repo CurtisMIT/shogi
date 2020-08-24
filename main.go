@@ -15,10 +15,14 @@ limitations under the License.
 */
 package main
 
-import (
-	"github.com/CurtisMIT/shogi/cmd"
-)
+// import "github.com/CurtisMIT/shogi/cmd"
+
+// func main() {
+// 	cmd.Execute()
+// }
+
+import "github.com/CurtisMIT/shogi/pkg/game"
 
 func main() {
-	cmd.Execute()
+	game.Init()
 }

@@ -29,24 +29,16 @@ var startCmd = &cobra.Command{
 	Short: "Initializes a shogi game",
 	Long:  `shogi start instantly creates a shogi game`,
 	Run: func(cmd *cobra.Command, args []string) {
+		mode, _ := cmd.Flags().GetInt("mode")
+		fmt.Println(mode)
 		fmt.Println("start called")
-		p0 := game.Player{
-			Black: true,
-		}
-
-		p1 := game.Player{
-			Black: false,
-		}
-
-		g := game.NewGame(p0, p1)
-
-		g.Board.PrintBoard()
+		game.Init()
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(startCmd)
-
+	startCmd.Flags().Int("mode", 0, "Specify mode")
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
