@@ -19,7 +19,7 @@ limitations under the License.
 import (
 	"fmt"
 
-	"github.com/CurtisMIT/shogi/game"
+	"github.com/CurtisMIT/shogi/pkg/game"
 	"github.com/spf13/cobra"
 )
 

@@ -31,35 +31,48 @@ const (
 	pRook    string = "R"
 )
 
+var pieceInitMap map[string]func(bool) Piece
+
 // Base is base struct for a piece in shogi
 type Base struct {
-	isBlack bool
-	kanji   string
-	name    string
+	isBlack    bool
+	kanji      string
+	name       string
+	promotable bool
 }
 
-func newPiece(isBlack bool, kanji string, name string) *Base {
+func NewPiece(isBlack bool, kanji string, name string, promotable bool) *Base {
 	b := Base{
-		isBlack: isBlack,
-		kanji:   kanji,
-		name:    name,
+		isBlack:    isBlack,
+		kanji:      kanji,
+		name:       name,
+		promotable: promotable,
 	}
 
 	return &b
 }
 
-func (p *Base) getKanji() string {
-	return p.kanji
+// GetKanji returns the kanji of the piece
+func (b *Base) getKanji() string {
+	return b.kanji
 }
 
-func (p *Base) getName() string {
-	return p.name
+// GetName returns the name of the piece
+func (b *Base) getName() string {
+	return b.name
 }
 
-func (p *Base) getColor() bool {
-	return p.isBlack
+// GetColor returns the color of the piece
+func (b *Base) getColor() bool {
+	return b.isBlack
 }
 
+// IsPromotable returns whether the piece is promotable or not
+func (b *Base) isPromotable() bool {
+	return b.promotable
+}
+
+// Equals returns whether this piece is equal to that other piece
 func (this *Base) equals(other Piece) bool {
 	if this.getName() != other.getName() {
 		return false
@@ -81,9 +94,9 @@ type King struct {
 	*Base
 }
 
-func newKing(isBlack bool) *King {
+func NewKing(isBlack bool) *King {
 	k := King{
-		newPiece(isBlack, nKing, king),
+		NewPiece(isBlack, nKing, king, false),
 	}
 
 	return &k
@@ -98,9 +111,9 @@ type Rook struct {
 	*Base
 }
 
-func newRook(isBlack bool) *Rook {
+func NewRook(isBlack bool) *Rook {
 	r := Rook{
-		newPiece(isBlack, nRook, rook),
+		NewPiece(isBlack, nRook, rook, true),
 	}
 
 	return &r
@@ -115,9 +128,9 @@ type Bishop struct {
 	*Base
 }
 
-func newBishop(isBlack bool) *Bishop {
+func NewBishop(isBlack bool) *Bishop {
 	b := Bishop{
-		newPiece(isBlack, nBishop, bishop),
+		NewPiece(isBlack, nBishop, bishop, true),
 	}
 
 	return &b
@@ -132,9 +145,9 @@ type GoldGeneral struct {
 	*Base
 }
 
-func newGoldGeneral(isBlack bool) *GoldGeneral {
+func NewGoldGeneral(isBlack bool) *GoldGeneral {
 	gg := GoldGeneral{
-		newPiece(isBlack, nGGeneral, gGeneral),
+		NewPiece(isBlack, nGGeneral, gGeneral, false),
 	}
 
 	return &gg
@@ -149,9 +162,9 @@ type SilverGeneral struct {
 	*Base
 }
 
-func newSilverGeneral(isBlack bool) *SilverGeneral {
+func NewSilverGeneral(isBlack bool) *SilverGeneral {
 	ss := SilverGeneral{
-		newPiece(isBlack, nSGeneral, sGeneral),
+		NewPiece(isBlack, nSGeneral, sGeneral, true),
 	}
 
 	return &ss
@@ -166,9 +179,9 @@ type Knight struct {
 	*Base
 }
 
-func newKnight(isBlack bool) *Knight {
+func NewKnight(isBlack bool) *Knight {
 	n := Knight{
-		newPiece(isBlack, nKnight, knight),
+		NewPiece(isBlack, nKnight, knight, true),
 	}
 
 	return &n
@@ -183,9 +196,9 @@ type Lance struct {
 	*Base
 }
 
-func newLance(isBlack bool) *Lance {
+func NewLance(isBlack bool) *Lance {
 	l := Lance{
-		newPiece(isBlack, nLance, lance),
+		NewPiece(isBlack, nLance, lance, true),
 	}
 
 	return &l
@@ -200,9 +213,9 @@ type Pawn struct {
 	*Base
 }
 
-func newPawn(isBlack bool) *Pawn {
+func NewPawn(isBlack bool) *Pawn {
 	p := Pawn{
-		newPiece(isBlack, nPawn, pawn),
+		NewPiece(isBlack, nPawn, pawn, true),
 	}
 
 	return &p
@@ -217,9 +230,9 @@ type PPawn struct {
 	*Base
 }
 
-func newPPawn(isBlack bool) *PPawn {
+func NewPPawn(isBlack bool) *PPawn {
 	pp := PPawn{
-		newPiece(isBlack, nPPawn, pPawn),
+		NewPiece(isBlack, nPPawn, pPawn, false),
 	}
 
 	return &pp
@@ -234,9 +247,9 @@ type PKnight struct {
 	*Base
 }
 
-func newPKnight(isBlack bool) *PKnight {
+func NewPKnight(isBlack bool) *PKnight {
 	pk := PKnight{
-		newPiece(isBlack, nPKnight, pKnight),
+		NewPiece(isBlack, nPKnight, pKnight, false),
 	}
 
 	return &pk
@@ -251,9 +264,9 @@ type PSilver struct {
 	*Base
 }
 
-func newPSilver(isBlack bool) *PSilver {
+func NewPSilver(isBlack bool) *PSilver {
 	ps := PSilver{
-		newPiece(isBlack, nPSilver, pSilver),
+		NewPiece(isBlack, nPSilver, pSilver, false),
 	}
 
 	return &ps
@@ -268,9 +281,9 @@ type PBishop struct {
 	*Base
 }
 
-func newPBishop(isBlack bool) *PBishop {
+func NewPBishop(isBlack bool) *PBishop {
 	pb := PBishop{
-		newPiece(isBlack, nPBishop, pBishop),
+		NewPiece(isBlack, nPBishop, pBishop, false),
 	}
 
 	return &pb
@@ -285,9 +298,9 @@ type PRook struct {
 	*Base
 }
 
-func newPRook(isBlack bool) *PRook {
+func NewPRook(isBlack bool) *PRook {
 	pr := PRook{
-		newPiece(isBlack, nPRook, pRook),
+		NewPiece(isBlack, nPRook, pRook, false),
 	}
 
 	return &pr

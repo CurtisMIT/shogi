@@ -1,0 +1,63 @@
+Shogi
+
+First and foremost, a chess (shogi) engine.
+It will have the ability to be played against a default player (random move generator), and against a specified opponent.
+
+Move representation:
+Moves will be represented by a "to and from" format, as additional information can be derived from just those two information.
+For promotion related moves, it will be followed by a Plus "+" sign.
+
+0123 -> refers to from x: 0, y: 1 to x: 2, y: 3
+
+2434+ -> refers to from x:2, y: 3 to x: 3, y: 4 and promote
+
+r67 -> refers to a drop of a rook piece to x: 6, y: 7.
+
+You are able to promote after capturing.
+
+Process Flow:
+1. User executes binary.
+2. System initializes game.
+3. System generates prompt for user.
+4. User enters move.
+5. System reads in move.
+6. System commences move validation.
+    - validates length of move: Can only be of length 4 (default) and 5 (promote)
+    - if length is not of "drop" move:
+        - validates "from" coordinate:
+            - can only be within the 9x9 board.
+            - cannot be an empty spot.
+            - can only be the user's piece.
+        - validates "to" coordinate:
+            - can only be within the 9x9 board.
+            - can only have a piece that is of the user's opposite color or an empty spot.
+    - if length is of "drop" move:
+        - validates that user has such a piece to drop.
+        - validates "to" coordinate:
+            - can only be within the 9x9 board.
+            - can only be an empty spot.
+    - if length is of "promote" move:
+        - validates promotion:
+            - whether the piece can be promoted.
+            - whether the piece is in the zone to be promoted (the furthest 3 throws of the user).
+        - assigns promotion boolean
+    - return move constructed from validation or error should any of the validation fail.
+7. System executes move
+    - if not executing a "drop" move:
+        - if "to" position contains a piece:
+            - add that piece into user's "captured" collection.
+        - igitialize a piece at "to" position that is the same as the piece at ffrom".
+        - removes piece at "from" position.
+    - if executing a "promote" move:
+        - find the piece's promotion piece.
+        - initialize promotion piece at "to" spot.
+    - if executing a "drop" move:
+        - initialize piece specified in "drop" move at "to" location.
+    - return nil if no errors, error if any errors occured.
+8. System validates game status:
+    - Are we in "checkmate" position:
+        - exit out of game loop.
+        - print out winner.
+        - finish application process.
+    - Keep playing.
+        

@@ -1,8 +1,6 @@
 package game
 
-import (
-	"strconv"
-)
+import "strconv"
 
 // Spot refers to a spot on the board
 type Spot struct {
@@ -17,10 +15,11 @@ type Piece interface {
 	getKanji() string
 	getName() string
 	getColor() bool
+	isPromotable() bool
 	equals(Piece) bool
 }
 
-func newSpot(x int, y int, p Piece) *Spot {
+func NewSpot(x int, y int, p Piece) *Spot {
 	s := &Spot{x, y, p}
 	return s
 }
@@ -56,7 +55,9 @@ func (s *Spot) toString() string {
 	str += " y: "
 	str += strconv.Itoa(s.y)
 	str += " #: "
-	str += s.p.getKanji()
+	if s.p != nil {
+		str += s.p.getKanji()
+	}
 	return str
 }
 
