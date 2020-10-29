@@ -147,7 +147,7 @@ func (g *Game) isCaptured(input []string) (Piece, error) {
 	return piece, nil
 }
 
-func (g *Game) isValid(input string) (Move, error) {
+func (g *Game) isValid(input string) (*Move, error) {
 	length, err := isValidLength(input)
 	if err != nil {
 		return nil, err
@@ -189,7 +189,7 @@ func (g *Game) isValid(input string) (Move, error) {
 	move := newDefaultMove(g.CurrentPlayer, from, to, piece, isPromotion)
 
 	fmt.Println(move.toString())
-	return move, nil
+	return &move, nil
 }
 
 func (g *Game) execInput(input string) error {
